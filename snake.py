@@ -43,6 +43,8 @@ while not GAME_EXIT:
             elif event.key == pygame.K_DOWN:
                 lead_y_change = 10
                 lead_x_change = 0
+    if lead_x > 800 or lead_x < 0 or lead_y > 600 or lead_y < 0:
+        GAME_EXIT = True
 
     # Update head position
     lead_x += lead_x_change
