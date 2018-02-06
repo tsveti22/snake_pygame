@@ -22,17 +22,19 @@ clock = pygame.time.Clock()
 
 # FUNCTION DEFINITIONS
 
-# Eat apple and generate new one
-def eatApple(x,y,rand_x,rand_y):
+# Eat apple, generate new one and make snake grow
+def eatApple(x,y,rand_x,rand_y, length):
     if x == rand_x and y == rand_y:
         rand_x = round(random.randrange(0, DISPLAY_WIDTH - BLOCK_SIZE)/10.0)*10.0
         rand_y = round(random.randrange(0, DISPLAY_HEIGHT - BLOCK_SIZE)/10.0)*10.0
-    coord = (rand_x, rand_y)
-    return coord
+        length = length + 1
+    result = (rand_x, rand_y, length)
+    return result
 
-# Make snake grow
+# Create snake body
 def snakeBody(BLOCK_SIZE,snakeList):
-    for xy in snakeList:
+    pygame.draw.rect(gameDisplay, black, [snakeList[-1][0],snakeList[-1][1], BLOCK_SIZE,BLOCK_SIZE])
+    for xy in snakeList[:-1]:
         pygame.draw.rect(gameDisplay, green, [xy[0],xy[1], BLOCK_SIZE,BLOCK_SIZE])
 
 # Show message on screen
@@ -49,6 +51,10 @@ def gameLoop():
     # HEAD OF THE SNAKE
     lead_x = DISPLAY_WIDTH/2
     lead_y = DISPLAY_HEIGHT/2
+
+    # List of snake segments
+    snakeList = []
+    snakeLength = 1
 
     # MOTION
     lead_x_change = 0
@@ -100,20 +106,26 @@ def gameLoop():
 
         # Draw background and apple
         gameDisplay.fill(white)
-        pygame.draw.rect(gameDisplay, red, [randAppleX,randAppleY, BLOCK_SIZE, BLOCK_SIZE])
+        gameDisplay.blit(apple, (randAppleX,randAppleY))
 
         # List of coordinates of snake
-        snakeList = []
         snakeHead = []
         snakeHead.append(lead_x)
         snakeHead.append(lead_y)
         snakeList.append(snakeHead)
+
+        if len(snakeList) > snakeLength:
+            del snakeList[0]
+        # Collision
+        for segment in snakeList[:-1]:
+            if segment == snakeHead:
+                GAME_OVER == True
 
         # Draw snake
         snakeBody(BLOCK_SIZE, snakeList)
         pygame.display.update()
 
         # Eat apple
-        randAppleX, randAppleY = eatApple(lead_x,lead_y,randAppleX,randAppleY)
+        randAppleX, randAppleY, snakeLength = eatApple(lead_x,lead_y,randAppleX,randAppleY, snakeLength)
 
         clock.tick(FPS)

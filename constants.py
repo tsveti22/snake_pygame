@@ -20,3 +20,7 @@ BLOCK_SIZE = 10
 
 # FRAMES PER SECOND
 FPS = 10
+
+# Images
+body = pygame.image.load('body.png')
+apple = pygame.image.load('apple.png')
