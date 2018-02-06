@@ -1,4 +1,5 @@
-# snake_pygame
-
-Just an attempt to build the snake in Python using Pygame. 
-Will add more info later.
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#               A pygame version of The Snake                  #
+#                Following the tutorials by:                   #
+#   https://www.youtube.com/channel/UCJbPGzawDH1njbqV-D5HqKw   #
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

@@ -5,6 +5,7 @@
 import pygame
 import time
 from constants import *
+import random
 
 pygame.init()
 
@@ -20,6 +21,19 @@ font = pygame.font.SysFont(None, 25)
 clock = pygame.time.Clock()
 
 # FUNCTION DEFINITIONS
+
+# Eat apple and generate new one
+def eatApple(x,y,rand_x,rand_y):
+    if x == rand_x and y == rand_y:
+        rand_x = round(random.randrange(0, DISPLAY_WIDTH - BLOCK_SIZE)/10.0)*10.0
+        rand_y = round(random.randrange(0, DISPLAY_HEIGHT - BLOCK_SIZE)/10.0)*10.0
+    coord = (rand_x, rand_y)
+    return coord
+
+# Make snake grow
+def snakeBody(BLOCK_SIZE,snakeList):
+    for xy in snakeList:
+        pygame.draw.rect(gameDisplay, green, [xy[0],xy[1], BLOCK_SIZE,BLOCK_SIZE])
 
 # Show message on screen
 def screenMessage(msg,colour):
@@ -40,11 +54,15 @@ def gameLoop():
     lead_x_change = 0
     lead_y_change = 0
 
+    # Apple location = random
+    randAppleX = round(random.randrange(0, DISPLAY_WIDTH - BLOCK_SIZE)/10.0)*10.0
+    randAppleY = round(random.randrange(0, DISPLAY_HEIGHT - BLOCK_SIZE)/10.0)*10.0
+
     # Main loop
     while not GAME_EXIT:
         while GAME_OVER == True:
             gameDisplay.fill(white)
-            screenMessage("GAME OVER! Press C to play again or Q to quit", red)
+            screenMessage("GAME OVER! Press C to play again or Q to quit.", red)
             pygame.display.update()
 
             for event in pygame.event.get():
@@ -80,8 +98,22 @@ def gameLoop():
         lead_x += lead_x_change
         lead_y += lead_y_change
 
+        # Draw background and apple
         gameDisplay.fill(white)
-        pygame.draw.rect(gameDisplay, black, [lead_x,lead_y, BLOCK_SIZE,BLOCK_SIZE])
+        pygame.draw.rect(gameDisplay, red, [randAppleX,randAppleY, BLOCK_SIZE, BLOCK_SIZE])
+
+        # List of coordinates of snake
+        snakeList = []
+        snakeHead = []
+        snakeHead.append(lead_x)
+        snakeHead.append(lead_y)
+        snakeList.append(snakeHead)
+
+        # Draw snake
+        snakeBody(BLOCK_SIZE, snakeList)
         pygame.display.update()
+
+        # Eat apple
+        randAppleX, randAppleY = eatApple(lead_x,lead_y,randAppleX,randAppleY)
 
         clock.tick(FPS)

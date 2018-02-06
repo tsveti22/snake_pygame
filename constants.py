@@ -11,6 +11,7 @@ pygame.init()
 white = (255,255,255)
 black = (0,0,0)
 red = (255,0,0)
+green = (0,155,0)
 
 # SIZE CONSTANTS
 DISPLAY_WIDTH = 800
@@ -18,4 +19,4 @@ DISPLAY_HEIGHT = 600
 BLOCK_SIZE = 10
 
 # FRAMES PER SECOND
-FPS = 30
+FPS = 10

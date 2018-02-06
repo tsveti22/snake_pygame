@@ -21,8 +21,6 @@ pygame.display.update()
 # Main loop
 gameLoop()
 
-
-
 # Uninitialise and quit pygame
 pygame.quit()
 quit()
