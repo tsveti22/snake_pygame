@@ -117,9 +117,8 @@ def gameLoop():
         if len(snakeList) > snakeLength:
             del snakeList[0]
         # Collision
-        for segment in snakeList[:-1]:
-            if segment == snakeHead:
-                GAME_OVER == True
+        if snakeHead in snakeList[:-1]:
+            GAME_OVER = True
 
         # Draw snake
         snakeBody(BLOCK_SIZE, snakeList)
