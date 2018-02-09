@@ -17,6 +17,9 @@ green = (0,155,0)
 DISPLAY_WIDTH = 400
 DISPLAY_HEIGHT = 300
 BLOCK_SIZE = 10
+BORDER = 10
+FIELD_WIDTH = DISPLAY_WIDTH - BORDER
+FIELD_HEIGHT = DISPLAY_HEIGHT - BORDER
 
 # FRAMES PER SECOND
 FPS = 10
@@ -25,3 +28,5 @@ FPS = 10
 headimg = pygame.image.load('head.png')
 body = pygame.image.load('body.png')
 apple = pygame.image.load('apple.png')
+horizontal = pygame.image.load('horizontal.png')
+vertical = pygame.image.load("vertical.png")

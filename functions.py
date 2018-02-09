@@ -25,8 +25,8 @@ clock = pygame.time.Clock()
 # Eat apple, generate new one and make snake grow
 def eatApple(x,y,rand_x,rand_y, length):
     if x == rand_x and y == rand_y:
-        rand_x = round(random.randrange(0, DISPLAY_WIDTH - BLOCK_SIZE)/10.0)*10.0
-        rand_y = round(random.randrange(0, DISPLAY_HEIGHT - BLOCK_SIZE)/10.0)*10.0
+        rand_x = round(random.randrange(BORDER, FIELD_WIDTH - BLOCK_SIZE)/10.0)*10.0
+        rand_y = round(random.randrange(BORDER, FIELD_HEIGHT - BLOCK_SIZE)/10.0)*10.0
         length = length + 1
     result = (rand_x, rand_y, length)
     return result
@@ -61,8 +61,8 @@ def gameLoop():
     lead_y_change = 0
 
     # Apple location = random
-    randAppleX = round(random.randrange(0, DISPLAY_WIDTH - BLOCK_SIZE)/10.0)*10.0
-    randAppleY = round(random.randrange(0, DISPLAY_HEIGHT - BLOCK_SIZE)/10.0)*10.0
+    randAppleX = round(random.randrange(BORDER, FIELD_WIDTH - BLOCK_SIZE)/10.0)*10.0
+    randAppleY = round(random.randrange(BORDER, FIELD_HEIGHT - BLOCK_SIZE)/10.0)*10.0
 
     # Main loop
     while not GAME_EXIT:
@@ -97,15 +97,21 @@ def gameLoop():
                     lead_x_change = 0
 
         # Set boundaries
-        if lead_x > DISPLAY_WIDTH or lead_x < 0 or lead_y > DISPLAY_HEIGHT or lead_y < 0:
+        if lead_x > FIELD_WIDTH or lead_x < BORDER or lead_y > FIELD_HEIGHT or lead_y < BORDER:
             GAME_OVER = True
 
         # Update head position
         lead_x += lead_x_change
         lead_y += lead_y_change
 
-        # Draw background and apple
+        # Draw background
         gameDisplay.fill(white)
+        # Draw boundaries
+        top_bound = gameDisplay.blit(horizontal,(0,0))
+        bottom_bound = gameDisplay.blit(horizontal,(0,DISPLAY_HEIGHT-BORDER))
+        left_bound = gameDisplay.blit(vertical, (0,0))
+        right_bound = gameDisplay.blit(vertical, (DISPLAY_WIDTH-BORDER, 0))
+        # Draw apple
         gameDisplay.blit(apple, (randAppleX,randAppleY))
 
         # List of coordinates of snake
