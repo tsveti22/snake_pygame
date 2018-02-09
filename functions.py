@@ -33,9 +33,9 @@ def eatApple(x,y,rand_x,rand_y, length):
 
 # Create snake body
 def snakeBody(BLOCK_SIZE,snakeList):
-    pygame.draw.rect(gameDisplay, black, [snakeList[-1][0],snakeList[-1][1], BLOCK_SIZE,BLOCK_SIZE])
+    gameDisplay.blit(headimg,(snakeList[-1][0], snakeList[-1][1]))
     for xy in snakeList[:-1]:
-        pygame.draw.rect(gameDisplay, green, [xy[0],xy[1], BLOCK_SIZE,BLOCK_SIZE])
+        gameDisplay.blit(body, (xy[0], xy[1]))
 
 # Show message on screen
 def screenMessage(msg,colour):
