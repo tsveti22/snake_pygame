@@ -38,9 +38,20 @@ def snakeBody(BLOCK_SIZE,snakeList):
         gameDisplay.blit(body, (xy[0], xy[1]))
 
 # Show message on screen
-def screenMessage(msg,colour):
+def screenMessage(msg,colour, x,y):
     screen_text = font.render(msg, True, colour)
-    gameDisplay.blit(screen_text, [DISPLAY_WIDTH/2, DISPLAY_HEIGHT/2])
+    gameDisplay.blit(screen_text, [x, y])
+
+# Obtain image size
+def imageSize(image):
+    image_width, image_height = (image.get_rect().size)
+    return image_width, image_height
+
+# Find where to place image horizontally
+def centerImage(image):
+    w, h = imageSize(image)
+    x_pos = DISPLAY_WIDTH/2 - w/2
+    return x_pos
 
 # Main game loop
 def gameLoop():
@@ -64,11 +75,13 @@ def gameLoop():
     randAppleX = round(random.randrange(BORDER, FIELD_WIDTH - BLOCK_SIZE)/10.0)*10.0
     randAppleY = round(random.randrange(BORDER, FIELD_HEIGHT - BLOCK_SIZE)/10.0)*10.0
 
+
     # Main loop
     while not GAME_EXIT:
         while GAME_OVER == True:
             gameDisplay.fill(white)
-            screenMessage("GAME OVER! Press C to play again or Q to quit.", red)
+            game_over_text = gameDisplay.blit(gameoverimg,(centerImage(gameoverimg),100))
+            screenMessage("Press C to play again or Q to quit.", black, 70,200)
             pygame.display.update()
 
             for event in pygame.event.get():
@@ -132,5 +145,8 @@ def gameLoop():
 
         # Eat apple
         randAppleX, randAppleY, snakeLength = eatApple(lead_x,lead_y,randAppleX,randAppleY, snakeLength)
+
+        # Score
+        score = snakeLength
 
         clock.tick(FPS)
